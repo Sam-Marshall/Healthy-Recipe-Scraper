@@ -112,9 +112,12 @@ app.post("/recipes/:title/:link/:pic", function(req, res) {
     var modLink = link.split('**').join('/');
     var modPic = pic.split('**').join('/');
 
+    var finalLink = modLink.replace('http', 'https');
+    var finalPic = modPic.replace('http', 'https');
+
     result.title = req.params.title;
-    result.link = modLink;
-    result.pic = modPic;
+    result.link = finalLink;
+    result.pic = finalPic;
 
     var entry = new Article(result);
 
