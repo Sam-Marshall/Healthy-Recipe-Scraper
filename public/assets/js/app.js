@@ -22,7 +22,7 @@ $(document).ready(function() {
     function addComment(event) {
         
         var id = $(this).attr('id');
-        var comment = $('.newCommentAdd').val().trim();
+        var comment = $('#newCommentAdd' + id).val().trim();
 
         $.ajax({
             url: "/saved/" + id + "/" + comment,
