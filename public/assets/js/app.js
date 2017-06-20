@@ -2,23 +2,43 @@ $(document).ready(function() {
 
     $(document).on('click', '#scrapeBtn', scrapeArticles);
     $(document).on('click', '.saveArticle', saveArticle);
-    $(document).on('click', '.commentArticle', addComment);
     $(document).on('click', '.deleteArticle', deleteRecipe);
+    $(document).on('click', '.newCommentSubmit', addComment);
+    $(document).on('click', '.deleteComment', deleteComment);
+
+    function deleteComment(event) {
+    	event.preventDefault();
+        var id = $(this).attr('id');
+        console.log(id);
+        $.ajax({
+            url: "/comment/" + id,
+            method: "DELETE"
+        }).then(function(data) {
+            window.location.reload();
+        })
+    }
 
 
     function addComment(event) {
-
+        var comment = $('#newCommentAdd').val().trim();
+        var id = $(this).attr('id');
+        $.ajax({
+            url: "/saved/" + id + "/" + comment,
+            method: 'POST'
+        }).then(function(data) {
+            console.log(data);
+        });
     }
 
     function deleteRecipe(event) {
         var id = $(this).attr('id');
         console.log(id);
-        
+
         $.ajax({
             url: "/saved/" + id,
             method: "DELETE"
         }).then(function(data) {
-            location.reload();
+            window.location.reload();
         });
     }
 

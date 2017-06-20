@@ -57,6 +57,7 @@ db.once("open", function() {
 
 // Routes
 // ======
+//A GET request to populate the / page
 app.get("/", function(req, res) {
     res.render('index');
 });
@@ -100,6 +101,7 @@ app.get("/recipes", function(req, res) {
     });
 });
 
+//A POST request to add a recipe to the db
 app.post("/recipes/:title/:link/:pic", function(req, res) {
 
     var result = {};
@@ -116,7 +118,7 @@ app.post("/recipes/:title/:link/:pic", function(req, res) {
 
     var entry = new Article(result);
 
-    // Now, save that entry to the db
+    // Save that entry to the db
     entry.save(function(err, doc) {
         // Log any errors
         if (err) {
@@ -129,18 +131,69 @@ app.post("/recipes/:title/:link/:pic", function(req, res) {
     });
 });
 
+// A GET request to populate the saved recipe page
 app.get('/saved', function(req, res) {
-    Article.find({}, function(error, doc) {
+    Article.find({})
+        .populate("note")
+        .exec(function(error, doc) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(doc);
+                res.render('saved', { article: doc });
+            }
+        });
+});
+
+// A POST request to save a new note to the db and associate the new note to an article already in the db
+app.post("/saved/:id/:note", function(req, res) {
+    var result = {};
+    result.comment = req.params.note;
+
+    var newNote = new Note(result);
+
+    // Save the new note the db
+    newNote.save(function(error, doc) {
+        // Log any errors
         if (error) {
             console.log(error);
-        } else {
-            console.log(doc);
-            res.render('saved', { article: doc });
+        }
+        // Otherwise
+        else {
+            // Use the article id to find and update it's note array
+            Article.update({ "_id": req.params.id }, { $push: { "note": doc._id } })
+                // Execute the above query
+                .exec(function(err, doc) {
+                    // Log any errors
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        // Or send the document to the browser
+                        res.send(doc);
+                    }
+                });
         }
     });
 });
 
+//Get a single Article and its' Notes by id
+app.get('/saved/:id', function(req, res) {
+
+    Article.find({ "_id": req.params.id })
+        .populate("note")
+        .exec(function(error, doc) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(doc);
+            }
+        });
+
+})
+
+//A DELETE request to remove an Article from the db
 app.delete('/saved/:id', function(req, res) {
+
     Article.remove({ "_id": req.params.id }, function(error, doc) {
         if (error) {
             console.log(error);
@@ -148,8 +201,23 @@ app.delete('/saved/:id', function(req, res) {
             console.log(doc);
         }
     });
+
 });
 
+//A DELETE request to remove a Note from the db
+app.delete('/comment/:id', function(req, res) {
+
+    Note.remove({ "_id": req.params.id }, function(error, doc) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(doc);
+        }
+    });
+
+});
+
+//Start the server
 app.listen(PORT, function() {
     console.log("App running on port 8080!");
 });
