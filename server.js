@@ -60,35 +60,44 @@ db.once("open", function() {
 app.get("/", function(req, res) {
     res.render('index');
 });
-// A GET request to scrape the echojs website
-app.get("/scrape", function(req, res) {
-    // First, we grab the body of the html with request
-    // request('http://cookieandkate.com/recipes/', function(error, response, html) {
 
-    //     if (error) {
-    //         throw error;
-    //     }
+// A GET request to scrape the recipe website
+app.get("/recipes", function(req, res) {
+    // Grab the body of the html with request
+    request('http://cookieandkate.com/recipes/', function(error, response, html) {
 
-    //     // Load the HTML into cheerio and save it to a variable
-    //     // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-    //     var $ = cheerio.load(html);
+        if (error) {
+            throw error;
+        }
 
-    //     // Select each instance of the HTML body that you want to scrape
-    //     // NOTE: Cheerio selectors function similarly to jQuery's selectors, 
-    //     // but be sure to visit the package's npm page to see how it works
-    //     //i : index, element: element we selected
-    //     $('div.lcp_catlist_item').each(function(i, element) {
+        // Load the HTML into cheerio and save it to a variable
+        var $ = cheerio.load(html);
 
-    //         var title = $(element).children().attr("title");
-    //         var link = $(element).children().attr("href");
-    //         var pic = $(element).find("a").find("img").attr("src");
+        var result = []
 
+        // Select each instance of the HTML body that you want to scrape
+        $('div.lcp_catlist_item').each(function(i, element) {
 
-    //     });
+            var title = $(element).children().attr("title");
+            var link = $(element).children().attr("href");
+            var pic = $(element).find("a").find("img").attr("src");
 
-    // });
-    // // Tell the browser that we finished scraping the text
-    // res.send("Scrape Complete");
+            if (result.length < 21) {
+
+                result.push({
+                    title: title,
+                    link: link,
+                    pic: pic
+
+                });
+
+            }
+
+        });
+        // Tell the browser that we finished scraping the text
+        console.log(result);
+        res.render("index", { article: result });
+    });
 });
 
 app.listen(PORT, function() {

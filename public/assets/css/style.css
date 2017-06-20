@@ -1,9 +1,17 @@
-.jumbotron{
-	background-image: url("../../images/background.jpg");
-	text-align: center;
-	color: white;
-	background-repeat: no-repeat;
+.jumbotron {
+    background-image: url("../../images/background.jpg");
+    text-align: center;
+    color: white;
+    background-repeat: no-repeat;
     background-position: center;
     -webkit-background-size: cover;
     background-size: cover
+}
+
+.recipeOption {
+    text-align: center;
+}
+
+.panel-heading a {
+    color: white;
 }
