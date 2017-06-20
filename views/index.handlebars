@@ -1,50 +1,19 @@
 <div id="container-fluid">
-
-	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-	  
-	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-	  
-	  <a class="navbar-brand" href="#">Recipe Scraper</a>
-	  
-	  <div class="collapse navbar-collapse" id="navbarNav">
-	    <ul class="navbar-nav">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/saved">Save New Articles</a>
-	      </li>
-	      <li class="nav-item">
-	      	<a href="/recipes">
-	        	<button class="nav-link btn btn-danger" id="scrapeBtn">Scrape New Articles</button>
-	        </a>
-	      </li>
-	    </ul>
-	  </div>
-
-	</nav>
-
-	<div class="jumbotron">
-		<h1>Mongo Scraper</h1>
-		<h2>Recipe Edition</h2>
-	</div>
+{{> nav }}
 	<div>
 		<div class="row">
-			
 			{{#each article}}
 				<div class="col-sm-4 recipeOption">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<a href={{this.link}} target="_blank">
-								<h4>{{this.title}}</h4>
+								<h5>{{this.title}}</h5>
 							</a>
-							<button data-title={{this.title}} data-link={{this.link}} data-image={{this.pic}} class="saveArticle btn btn-success btn-md">Save Article</button>
+							<button data-title="{{this.title}}" data-link={{this.link}} data-image={{this.pic}} class="saveArticle btn btn-success btn-md">Save Article</button>
 						</div>
 						<div class="panel-body">
 							<a href={{this.link}} target="_blank">
-								<img src="{{this.pic}}" alt={{this.title}}>
+								<img src="{{this.pic}}" alt="{{this.title}}">
 							</a>
 						</div>
 					</div>

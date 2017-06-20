@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    font-family: "Palatino";
+}
+
 .jumbotron {
     background-image: url("../../images/background.jpg");
     text-align: center;
@@ -5,7 +10,8 @@
     background-repeat: no-repeat;
     background-position: center;
     -webkit-background-size: cover;
-    background-size: cover
+    background-size: cover;
+    min-height: 400px;
 }
 
 .recipeOption {
@@ -14,4 +20,23 @@
 
 .panel-heading a {
     color: white;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-item {
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.jumbotronText {
+    background: black;
+    opacity: 0.5;
+    background-size: contain;
+    margin: 0px;
+    padding: 10px;
+    width: 45%;
 }

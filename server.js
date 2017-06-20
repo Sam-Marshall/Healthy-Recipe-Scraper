@@ -100,6 +100,56 @@ app.get("/recipes", function(req, res) {
     });
 });
 
+app.post("/recipes/:title/:link/:pic", function(req, res) {
+
+    var result = {};
+
+    var link = req.params.link;
+    var pic = req.params.pic;
+
+    var modLink = link.split('**').join('/');
+    var modPic = pic.split('**').join('/');
+
+    result.title = req.params.title;
+    result.link = modLink;
+    result.pic = modPic;
+
+    var entry = new Article(result);
+
+    // Now, save that entry to the db
+    entry.save(function(err, doc) {
+        // Log any errors
+        if (err) {
+            console.log(err);
+        }
+        // Or log the doc
+        else {
+            console.log(doc);
+        }
+    });
+});
+
+app.get('/saved', function(req, res) {
+    Article.find({}, function(error, doc) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(doc);
+            res.render('saved', { article: doc });
+        }
+    });
+});
+
+app.delete('/saved/:id', function(req, res) {
+    Article.remove({ "_id": req.params.id }, function(error, doc) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(doc);
+        }
+    });
+});
+
 app.listen(PORT, function() {
     console.log("App running on port 8080!");
 });

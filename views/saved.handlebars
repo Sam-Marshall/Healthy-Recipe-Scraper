@@ -1,0 +1,27 @@
+<div id="container-fluid">
+{{> nav }}
+	<div>
+		<div class="row">
+			{{#each article}}
+				<div class="col-sm-4 recipeOption">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<a href={{this.link}} target="_blank">
+								<h5>{{this.title}}</h5>
+							</a>
+							<button data-title="{{this.title}}" data-link={{this.link}} data-image={{this.pic}} class="commentArticle btn btn-warning btn-md">Add Comment</button>
+							<button id={{this._id}} data-title="{{this.title}}" data-link={{this.link}} data-image={{this.pic}} class="deleteArticle btn btn-danger btn-md">Delete Recipe</button>
+						</div>
+						<div class="panel-body">
+							<a href={{this.link}} target="_blank">
+								<img src="{{this.pic}}" alt="{{this.title}}">
+							</a>
+						</div>
+					</div>
+				</div>
+			{{/each}}
+
+		</div>
+	</div>
+
+</div>
