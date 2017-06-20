@@ -7,27 +7,31 @@ $(document).ready(function() {
     $(document).on('click', '.deleteComment', deleteComment);
 
     function deleteComment(event) {
-    	event.preventDefault();
+        event.preventDefault();
         var id = $(this).attr('id');
         console.log(id);
+
         $.ajax({
             url: "/comment/" + id,
             method: "DELETE"
-        }).then(function(data) {
-            window.location.reload();
-        })
+        });
+
+        location.reload(true);
     }
 
 
     function addComment(event) {
         var comment = $('#newCommentAdd').val().trim();
         var id = $(this).attr('id');
+        
         $.ajax({
             url: "/saved/" + id + "/" + comment,
             method: 'POST'
         }).then(function(data) {
             console.log(data);
         });
+
+        location.reload(true);
     }
 
     function deleteRecipe(event) {
@@ -37,9 +41,9 @@ $(document).ready(function() {
         $.ajax({
             url: "/saved/" + id,
             method: "DELETE"
-        }).then(function(data) {
-            window.location.reload();
         });
+
+        location.reload(true);
     }
 
     function scrapeArticles(event) {
@@ -72,6 +76,7 @@ $(document).ready(function() {
         }).then(function(data) {
             console.log(data);
         });
+
     }
 
 });

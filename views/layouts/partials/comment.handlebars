@@ -9,20 +9,23 @@
                       <span aria-hidden="true">&times;</span>
                   </button>
                   <div class="modal-title">
-                    <h4>{{this.title}} Comments</h4>
+                    <h3>{{this.title}} Comments</h3>
                   </div>
                   
 
               </div>
 
               <div class="modal-body">
+                <ul class="list-group">
                   {{#each note}}
+                    <li class="list-group-item clearfix">
                       <div>
-                        <button type="btn" class="glyphicon glyphicon-remove deleteComment" id={{this._id}}></button>
-                        <h6>{{this.comment}}</h6>
+                        <h4 class="pull-left">{{this.comment}}</h4>
+                        <button type="btn" class="pull-right glyphicon glyphicon-remove deleteComment" id={{this._id}}></button>
                       </div>
+                    </li>
                   {{/each}}
-
+                </ul>
                   <form>
 
                     <div class="form-group">
