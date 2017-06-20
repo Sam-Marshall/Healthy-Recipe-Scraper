@@ -23,9 +23,12 @@ var app = express();
 
 // Use morgan and body parser with our app
 app.use(logger("dev"));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 //Sets up handlebars as view engine
 app.engine("handlebars", exphbs({
@@ -35,7 +38,7 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Make public a static dir
-app.use(express.static("public"));
+app.use(express.static("./public"));
 
 // Database configuration with mongoose
 mongoose.connect("mongodb://localhost/recipemongoose");
@@ -54,7 +57,9 @@ db.once("open", function() {
 
 // Routes
 // ======
-
+app.get("/", function(req, res) {
+    res.render('index');
+});
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
@@ -87,5 +92,5 @@ app.get("/scrape", function(req, res) {
 });
 
 app.listen(PORT, function() {
-    console.log("App running on port 3000!");
+    console.log("App running on port 8080!");
 });
