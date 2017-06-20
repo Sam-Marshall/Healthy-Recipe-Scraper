@@ -5,6 +5,8 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
+var path = require("path");
 // Requiring our Note and Article models
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
@@ -14,6 +16,7 @@ var cheerio = require("cheerio");
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
+var PORT = process.env.PORT || 8080;
 
 // Initialize Express
 var app = express();
@@ -23,6 +26,13 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+//Sets up handlebars as view engine
+app.engine("handlebars", exphbs({
+    defaultLayout: 'main',
+    partialsDir: path.join(__dirname, '/views/layouts/partials')
+}));
+app.set("view engine", "handlebars");
 
 // Make public a static dir
 app.use(express.static("public"));
@@ -48,37 +58,34 @@ db.once("open", function() {
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
-    request('http://cookieandkate.com/recipes/', function(error, response, html) {
+    // request('http://cookieandkate.com/recipes/', function(error, response, html) {
 
-        if (error) {
-            throw error;
-        }
+    //     if (error) {
+    //         throw error;
+    //     }
 
-        // Load the HTML into cheerio and save it to a variable
-        // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-        var $ = cheerio.load(html);
+    //     // Load the HTML into cheerio and save it to a variable
+    //     // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+    //     var $ = cheerio.load(html);
 
-        // Select each instance of the HTML body that you want to scrape
-        // NOTE: Cheerio selectors function similarly to jQuery's selectors, 
-        // but be sure to visit the package's npm page to see how it works
-        //i : index, element: element we selected
-        $('div.lcp_catlist_item').each(function(i, element) {
+    //     // Select each instance of the HTML body that you want to scrape
+    //     // NOTE: Cheerio selectors function similarly to jQuery's selectors, 
+    //     // but be sure to visit the package's npm page to see how it works
+    //     //i : index, element: element we selected
+    //     $('div.lcp_catlist_item').each(function(i, element) {
 
-            // var link = $(this).attr("href");
-            var title = $(element).children().attr("title");
-            var link = $(element).children().attr("href");
-            var pic = $(element).find("a").find("img").attr("src");
+    //         var title = $(element).children().attr("title");
+    //         var link = $(element).children().attr("href");
+    //         var pic = $(element).find("a").find("img").attr("src");
 
-            // Save these results in an object that we'll push into the result array we defined earlier
 
-        });
+    //     });
 
-    });
-    // Tell the browser that we finished scraping the text
-    res.send("Scrape Complete");
+    // });
+    // // Tell the browser that we finished scraping the text
+    // res.send("Scrape Complete");
 });
 
-// Listen on port 3000
-app.listen(3000, function() {
+app.listen(PORT, function() {
     console.log("App running on port 3000!");
 });
