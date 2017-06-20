@@ -7,7 +7,6 @@ $(document).ready(function() {
     $(document).on('click', '.deleteComment', deleteComment);
 
     function deleteComment(event) {
-        event.preventDefault();
         var id = $(this).attr('id');
         console.log(id);
 
@@ -23,7 +22,7 @@ $(document).ready(function() {
     function addComment(event) {
         var comment = $('#newCommentAdd').val().trim();
         var id = $(this).attr('id');
-        
+
         $.ajax({
             url: "/saved/" + id + "/" + comment,
             method: 'POST'

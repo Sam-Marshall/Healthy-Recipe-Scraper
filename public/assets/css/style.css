@@ -44,3 +44,11 @@
 .deleteComment{
     color: red;
 }
+
+#preScrape{
+    background: black;
+    opacity: 0.5;
+    padding: 25px;
+    color: white;
+    text-align: center;
+}

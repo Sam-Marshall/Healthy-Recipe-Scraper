@@ -1,27 +1,20 @@
-	<nav class="navbar navbar-toggleable-md navbar-light bg-primary">
-	  
-{{!-- 	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button> --}}
-
+	
+	<nav class="navbar navbar-toggleable-md navbar-light bg-primary">	  
 		<div id="navbarNav">
 			<a class="navbar-brand nav-link" href="/">Recipe Scraper</a>
-		    <ul class="navbar-nav">
-		      <li class="nav-item active">
-		        <a class="nav-link" href="/">Home</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="/saved">Saved Recipes</a>
-		      </li>
-		    </ul>
-		    <a href="/recipes">
-		        <button class="nav-link btn btn-danger" id="scrapeBtn" data-target="#addedRecipes" data-toggle="modal">Scrape New Recipes</button>
-		    </a>
+			<div class="pull-right">
+			    <a href="/saved">
+			        <button class="nav-link btn btn-success" id="savedBtn">Saved Recipes</button>
+			    </a>
+			    <a href="/recipes">
+			        <button class="nav-link btn btn-danger" id="scrapeBtn" data-target="#addedRecipes" data-toggle="modal">Scrape New Recipes</button>
+			    </a>
+		    </div>
 		</div>
 
 	</nav>
 
-	<div class="jumbotron">
+	<div class="jumbotron clearfix">
 		<div class="jumbotronText">
 			<h1>Recipe Scraper</h1>
 			<h3>Cookie + Kate Edition</h3>

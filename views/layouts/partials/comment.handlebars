@@ -16,6 +16,9 @@
               </div>
 
               <div class="modal-body">
+                {{#unless note}}
+                  <h4>No Comments Yet</h4>
+                {{/unless}}
                 <ul class="list-group">
                   {{#each note}}
                     <li class="list-group-item clearfix">

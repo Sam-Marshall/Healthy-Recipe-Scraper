@@ -2,6 +2,13 @@
 {{> nav }}
 	<div>
 		<div class="row">
+		    {{#unless article}}
+			    <div id="preScrape">
+			    	<h3>Uh oh it looks like we don't we any new recipes yet</h3>
+			    	<h4>Click 'Scrape New Recipes' to Get Started!</h4>
+			    </div>
+            {{/unless}}
+
 			{{#each article}}
 				<div class="col-sm-4 recipeOption">
 					<div class="panel panel-primary">
