@@ -17,7 +17,6 @@ Run the below command to install dependencies from the package.json:
 
 ```
 npm i
-
 ```
 
 ## Running the app
@@ -28,7 +27,7 @@ npm i
 * Atom
 * Sublime Text 3
 
-## Walk throughs of code
+## Code Highlights
 
 
 
